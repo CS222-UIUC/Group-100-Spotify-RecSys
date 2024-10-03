@@ -1,0 +1,5 @@
+Flask==2.2.3
+requests==2.31.0
+flake8==7.1.1
+certifi==2023.11.17
+spotipy==2.24.0
