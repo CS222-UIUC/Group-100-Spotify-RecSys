@@ -5,6 +5,7 @@ from urllib.parse import urlencode
 from flask import Flask, jsonify, request, redirect
 import sys
 import os
+from lyricsgenius import Genius
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
