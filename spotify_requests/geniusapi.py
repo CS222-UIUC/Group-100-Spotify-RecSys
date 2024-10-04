@@ -23,3 +23,8 @@ if __name__ == '__main__':
     get_artist_info_response = requests.get('https://api.genius.com/search', headers=headers, params=params)
 
     print(get_artist_info_response.json())
+
+    #songs
+    song_id = 378195
+    #text_format optional
+    get_song_info_response = requests.get('https://api.genius.com/songs/',headers=headers,params=song_id )
