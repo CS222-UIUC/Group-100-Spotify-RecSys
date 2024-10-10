@@ -25,6 +25,8 @@ if __name__ == '__main__':
     #can get songs by genre-but will do via spotify probs
     #can get lyrics for all songs of a search
     #can get images too
+    #create/deleting and viewing annotations- through API/Genius class
+    #getting referents for annotations
 
     #Url about package: https://lyricsgenius.readthedocs.io/en/master/usage.html
     genius = Genius(GENIUS_API_CLIENT_ACCESS_TOKEN)
