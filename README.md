@@ -26,3 +26,6 @@ To run the Flask app, run the following:
 ```
 cd react-flask-app/api/ && flask run
 ```
+
+
+referred to [https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project/page/2#comments] for react flask app tutorial
