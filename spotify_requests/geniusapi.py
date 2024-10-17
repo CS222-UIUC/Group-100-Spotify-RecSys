@@ -2,10 +2,13 @@ import requests
 import base64
 import datetime
 from urllib.parse import urlencode
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, url_for, jsonify, request, redirect
+import spotipy 
+from spotipy.oauth2 import SpotifyClientCredentials,SpotifyOAuth
+from lyricsgenius import Genius
 import sys
 import os
-from lyricsgenius import Genius
+import json
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
@@ -13,25 +16,100 @@ sys.path.append(parent_dir)
 from constants import *
 
 if __name__ == '__main__':
-    #configuration
-    #headers = {
-    #"Authorization": f"Bearer {GENIUS_API_CLIENT_ACCESS_TOKEN}"
-    #}
-
-    #helpful functions are probably searching and adding songs? maybe done throguh spotify
-    #getting lyrics definitely helpful
-    #can get youtube url?
-    #CAN SEARCH FOR SONG BY LYRICS
-    #can get songs by genre-but will do via spotify probs
-    #can get lyrics for all songs of a search
-    #can get images too
-    #create/deleting and viewing annotations- through API/Genius class
-    #getting referents for annotations
 
     #Url about package: https://lyricsgenius.readthedocs.io/en/master/usage.html
+    
+    scope = 'user-top-read'
+
+    oauth_object = spotipy.SpotifyOAuth(client_id= SPOTIFY_API_CLIENT_ID,
+                                        client_secret= SPOTIFY_API_CLIENT_SECRET,
+                                        redirect_uri=SPOTIPY_API_REDIRECT_URI,
+                                        scope = scope,
+                                       )
+    token = oauth_object.get_access_token(as_dict=False)
+
+    spotify = spotipy.Spotify(auth=token)
     genius = Genius(GENIUS_API_CLIENT_ACCESS_TOKEN)
 
-    #search for song by lyrics// alternate method to do same thing too
+    top_track_response = spotify.current_user_top_tracks(limit=3)
+    top_artist_response = spotify.current_user_top_artists(limit=2)
+
+    top_artists= []
+
+    top_names = []
+    top_ids = []
+
+    for i in range(len(top_artist_response["items"])):
+        top_artists.append(top_artist_response["items"][i]["id"])
+
+    for i in range(len(top_track_response["items"])):
+        top_names.append(top_track_response["items"][i]["name"])
+        top_ids.append(top_track_response["items"][i]["id"])
+
+    recs_response = spotify.recommendations(seed_artists=top_artists, seed_genres=None, seed_tracks=top_ids, limit=1, country=None)
+    recs = []
+    for i in range(len(recs_response['tracks'])):
+        recs.append(recs_response['tracks'][i]['name'])
+    
+    print(top_names)
+    print(recs)
+
+    #search for artist's songs
+    #artist = genius.search_artist("Vance Joy", max_songs=3, sort="title")
+    #print(artist.songs)
+    
+    song = genius.search_song(recs[0])
+
+    comments_request = genius.song_comments(song.id, per_page=10)
+
+    comments = []
+
+    for i in range(len(comments_request['comments'])):
+        comments.append(comments_request['comments'][i]["body"]['plain'])
+
+    print(comments)
+    #print(json.dumps(comments_request['comments'], sort_keys=False, indent=4))
+
+    #referent_request = genius.referents(song_id=song.id,
+    #                       per_page=1)
+    
+
+    #annotations = [y for x in request['referents']
+    #        for y in x['annotations']]
+    
+    #fragments = []
+    #ann_text = []
+
+    anns = genius.song_annotations(song_id=song.id)
+    #print(anns[0][0])
+    #print(anns[0][1][0][0])
+
+    for i in range(len(anns)):
+        search_request  = genius.search_lyrics(anns[i][1][0][0],per_page=1)
+        #if(len(search_request['sections'][0]['hits']) != 0):
+            #print(search_request['sections'][0]['hits'][0]['result']['title'])
+    '''
+    for i in range(len(request['referents'])):
+        #print(annotations[i]['body']['plain'])
+        fragments.append(request['referents'][i]['fragment'])
+    
+    for i in range(len(annotations)):
+        #print(annotations[i]['body']['plain'])
+        ann_text.append(annotations[i]['body']['plain'])
+
+    '''
+
+    
+
+
+
+
+
+
+
+
+#search for song by lyrics// alternate method to do same thing too
+    '''
     request = genius.search_lyrics('Jeremy can we talk a minute?')
     for hit in request['sections'][0]['hits']:
         print(hit['result']['title'])   
@@ -43,11 +121,8 @@ if __name__ == '__main__':
 
     id = 2885745
     genius.lyrics(id)
-
-    #search for artist's songs
-    artist = genius.search_artist("Andy Shauf", max_songs=3, sort="title")
-    print(artist.songs)
-
+'''
+'''
     #search for song by artist
     song = genius.search_song("To You", artist.name)
     #searches artist's songs for the song before doing the above method
@@ -79,7 +154,7 @@ if __name__ == '__main__':
 
 
     #search function
-    '''artist_name = "Lana Del Rey"
+    artist_name = "Lana Del Rey"
     params = {'q': artist_name}
     get_artist_info_response = requests.get('https://api.genius.com/search', headers=headers, params=params)
 
