@@ -5,6 +5,8 @@ app = Flask(__name__)
 import spotify_requests.requestHelpers as spotify_request
 import genius_requests .requestHelpers as genius_request
 import constants 
+
+
 @app.route('/api/time', methods=['GET'])
 def get_current_time():
     return {'time': time.time()}
@@ -16,7 +18,7 @@ def send_message():
     message = data.get('name', '')  
     return jsonify({'responseMessage': f"Hello {message}"})
 
-
+'''
 @app.route('/api/spotify_auth', methods=['POST'])
 def get_spotify_auth_token():
     return jsonify({'token' : spotify_request.get_auth_token(constants.SPOTIFY_API_CLIENT_ID, constants.SPOTIFY_API_CLIENT_SECRET)})
@@ -37,3 +39,4 @@ def get_spotify_query(auth_token, q):
 @app.route('api/get_recommended_genres', methods = ['GET'])
 def get_spotify_genre_recc(auth_token):
     return jsonify({'genres' : spotify_request.get_recommended_genres(auth_token)})
+    '''
