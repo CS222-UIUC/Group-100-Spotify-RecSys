@@ -1,6 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
 import React, { useState, useEffect } from 'react';
+import './App.css';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
@@ -8,7 +7,6 @@ function App() {
   const [responseMessage, setResponseMessage] = useState('');
 
   useEffect(() => {
-    // Fetch the current time from the backend
     fetch('/api/time')
       .then(res => res.json())
       .then(data => {
@@ -17,6 +15,7 @@ function App() {
   }, []);
 
   const handleSendMessage = async () => {
+    console.log("Testing send message of name")
     const response = await fetch('/api/send-message', {
       method: 'POST',
       headers: {
@@ -28,7 +27,13 @@ function App() {
     setResponseMessage(data.responseMessage);
   };
 
+  const handleSpotifyLogin = () => {
+    console.log("Redirecting to Spotify login...");
+    window.open('http://localhost:5000/api/spotify-login', '_self');
+};
+
   return (
+
     <div className="App">
       <header className="App-header">
         <p>The current time is {currentTime}.</p>
@@ -40,6 +45,8 @@ function App() {
         />
         <button onClick={handleSendMessage}>Submit</button>
         <p>{responseMessage}</p>
+
+        <button onClick={handleSpotifyLogin}>Login with Spotify</button>
       </header>
     </div>
   );
