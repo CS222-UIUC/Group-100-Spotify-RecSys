@@ -1,6 +1,6 @@
 import unittest
 
-from geniusapi import GetAPIObjects, RecommendationsFromTops, CommentsofRecommendations, GetAccessTokenWithAuthorization
+from geniusapi import GetAPIObjects, RecommendationsFromTops, CommentsofRecommendations, GetAccessTokenWithAuthorization, InfoOfRecommendations
 import warnings
 
 class TestRecommendationAndComments(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestRecommendationAndComments(unittest.TestCase):
         """
         try:
             token = GetAccessTokenWithAuthorization()
-            spot, gen = GetAPIObjects(token)
+            GetAPIObjects(token)
         except BaseException as exc:
             assert False, f'raised an exception {exc}'
     def test_recommendations(self):
@@ -27,7 +27,9 @@ class TestRecommendationAndComments(unittest.TestCase):
         Test that function runs without error
         """
         try:
-            RecommendationsFromTops()
+            recs = RecommendationsFromTops()
+            for i in range(len(recs)):
+                print(recs[i])
         except BaseException as exc:
             assert False, f'raised an exception {exc}'
     def test_CommentsWeirdInput(self):
@@ -48,10 +50,34 @@ class TestRecommendationAndComments(unittest.TestCase):
 
     def test_CommentsNoSong(self):
         """
-        Test that function only accepts list
+        Test if song isnt real
         """
         data = ["i6ri8buy"]
         result = CommentsofRecommendations(data)
+        self.assertEqual(result, "song not found")
+    
+    def test_InfoWeirdInput(self):
+        """
+        Test that function only accepts list
+        """
+        data = 8
+        with self.assertRaises(TypeError):
+            InfoOfRecommendations(data)
+    
+    def test_InfoStrInput(self):
+        """
+        Test that function only accepts list
+        """
+        data = "RipTide"
+        with self.assertRaises(TypeError):
+            InfoOfRecommendations(data)
+
+    def test_InfoNoSong(self):
+        """
+        Test if song isnt real
+        """
+        data = ["i6ri8buy"]
+        result = InfoOfRecommendations(data)
         self.assertEqual(result, "song not found")
 
 if __name__ == '__main__':
