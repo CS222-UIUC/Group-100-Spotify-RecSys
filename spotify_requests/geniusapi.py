@@ -4,20 +4,22 @@ from spotipy.oauth2 import SpotifyOauthError
 from lyricsgenius import Genius
 import sys
 import os
+import json
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
 
 from constants import *
 
+
 # get spotify authorization and access token with necessary scope
 def GetAccessTokenWithAuthorization():
-    scope = 'user-top-read'
+    #scope = 'user-top-read' 'streaming' 'user-read-email' 'user-read-private'
     try:
         oauth_object = spotipy.SpotifyOAuth(client_id=SPOTIFY_API_CLIENT_ID,
                                     client_secret=SPOTIFY_API_CLIENT_SECRET,
                                     redirect_uri=SPOTIPY_API_REDIRECT_URI,
-                                    scope=scope,
+                                    #scope=scope,
                                     )
         token = oauth_object.get_access_token(as_dict=False)
         return token
@@ -56,7 +58,7 @@ def RecommendationsFromTops():
         top_ids.append(top_track_response["items"][i]["id"])
 
     # get recommendations
-    recs_response = spotify.recommendations(seed_artists=top_artists, seed_genres=None, seed_tracks=top_ids, limit=1, country=None)
+    recs_response = spotify.recommendations(seed_artists=top_artists, seed_genres=None, seed_tracks=top_ids, limit=5, country=None)
     recs = []
     for i in range(len(recs_response['tracks'])):
         recs.append(recs_response['tracks'][i]['name'])
@@ -67,19 +69,41 @@ def CommentsofRecommendations(recs):
     spotify, genius = GetAPIObjects(token)
     if(type(recs) != list):
         raise TypeError
-    song = genius.search_song(recs[0])
-    print(song)
-    if(song is None):
-        return "song not found"
-
-    comments_request = genius.song_comments(song.id, per_page=10)
     comments = []
-
-    for i in range(len(comments_request['comments'])):
-        comments.append(comments_request['comments'][i]["body"]['plain'])
-
+    for i in range(len(recs)):
+        comments.append([])
+        song = genius.search_song(recs[i])
+        if(song is None):
+            return "song not found"
+        comments_request = genius.song_comments(song.id, per_page=10)
+        for i in range(len(comments_request['comments'])):
+            comments[i].append(comments_request['comments'][i]["body"]['plain'])
     return comments
 
+#takes in recommendations and gives facts about them
+def InfoOfRecommendations(recs):
+    recs = ['Riptide', 'Everybody Talks', 'APT.']
+    #'Locked out of Heaven', 'Everybody Talks'
+    token = GetAccessTokenWithAuthorization()
+    spotify, genius = GetAPIObjects(token)
+    if(type(recs) != list):
+        raise TypeError
+    for i in range(len(recs)):
+        song = genius.search_song(recs[i])
+        if(song is None):
+            print ("song not found")
+        song_data = genius.song(song.id)
+        title = song_data['song']['full_title']
+        artist = song_data['song']['artist_names']
+        desc = song_data['song']['description_annotation']['annotations'][0]['body']['plain']
+        print("___________________________________________________________________")
+        print(title)
+        print("Artist: " + artist)
+        print("About:")
+        print(desc)
+        print("___________________________________________________________________")
+
+        
 # FailedExperiment, will not test bc will not be used
 def RecommendationsFromAnnotations(song):
     token = GetAccessTokenWithAuthorization()
