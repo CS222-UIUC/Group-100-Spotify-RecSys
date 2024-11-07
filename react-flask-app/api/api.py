@@ -37,6 +37,7 @@ def get_valid_token():
 
     return token_info['access_token']
 
+'''
 @app.route("/api/time", methods=["GET"])
 def get_current_time():
     return {"time": time.time()}
@@ -48,7 +49,7 @@ def send_message():
     message = data.get("name", "")
     return jsonify({"responseMessage": f"Hello {message}"})
 
-
+'''
 @app.route("/api/spotify-login", methods=["GET"])
 def spotify_login():
     oauth = get_spotify_oauth()
@@ -83,7 +84,7 @@ def get_top_5_songs():
     try:
         top_tracks_response = spotify.current_user_top_tracks(limit=5)
         top_tracks = [track['name'] for track in top_tracks_response['items']]
-        return jsonify({'top_tracks': top_tracks})
+        return jsonify({'top_tracks': top_tracks, 'token' : access_token})
     except spotipy.SpotifyException:
         return jsonify({'error': 'Failed to fetch top tracks'}), 400
 
