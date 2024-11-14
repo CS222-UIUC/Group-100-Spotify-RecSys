@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 //import { useLocation, useNavigate } from 'react-router-dom'
 import './App.css';
 
-function App() {
+function Login() {
 
   const [topTracks, setTopTracks] = useState(null);
+  const [recommendedTracks, setRecommendedTracks] = useState(null);
   const [token, setToken] = useState(null);
   //const [searchParams, setSearchParams] = useSearchParams();
   //const location = useLocation();
@@ -22,7 +24,7 @@ function App() {
     }
   }, []);
 
-  
+
   const handleSpotifyLogin = () => {
     window.open('http://localhost:5000/api/spotify-login', '_self');
   };
@@ -63,6 +65,27 @@ function App() {
     }
   };
 
+  const fetchPersonalizedRecommended = async () => {
+    try {
+      const response = await fetch('/api/personal-recc', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: null }), 
+      });
+      const data = await response.json();
+      if (data.recommended_songs) {
+        setRecommendedTracks(data.recommended_songs);
+        setToken(data.access_token);
+      } else {
+        console.error('Failed to fetch personalized recommended tracks:', data.error);
+      }
+    } catch (error) {
+      console.error('Error fetching recommended tracks:', error);
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -78,9 +101,43 @@ function App() {
             </div>
           )}
         </div>
+        <div>
+          <button onClick={fetchPersonalizedRecommended}>Get Recommended</button>
+          {recommendedTracks && (
+            <div>
+              <h3>Your Top 5 Recommendations:</h3>
+              <pre>{JSON.stringify(recommendedTracks, null, 2)}</pre>
+            </div>
+          )}
+        </div>
       </header>
     </div>
   );
 }
 
+export default Login;
+
+
+/*
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Login from './Login';
+//import { useLocation, useNavigate } from 'react-router-dom'
+import './App.css';
+
+function App() {
+
+
+  return (
+<BrowserRouter>
+<main>
+  <Routes>
+    <Route path = '/login' element = {<Login />} />
+  </Routes>
+</main>
+</BrowserRouter>
+  );
+}
+
 export default App;
+*/

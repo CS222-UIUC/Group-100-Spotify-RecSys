@@ -90,3 +90,32 @@ def get_top_5_songs():
 
 
 
+@app.route("/api/personal-recc", methods = ['POST'])
+def get_top_5_recommendations():
+    access_token = get_valid_token()
+
+    if not access_token:
+        return jsonify({'error': 'No valid token available'}), 400
+
+    spotify = spotipy.Spotify(auth=access_token)
+    try:
+        top_track_response = spotify.current_user_top_tracks(limit=3)
+        top_artist_response = spotify.current_user_top_artists(limit=2)
+        top_artists = []
+        top_names = []
+        top_ids = []
+        for i in range(len(top_artist_response["items"])):
+            top_artists.append(top_artist_response["items"][i]["id"])
+
+        for i in range(len(top_track_response["items"])):
+            top_names.append(top_track_response["items"][i]["name"])
+            top_ids.append(top_track_response["items"][i]["id"])
+
+        recs_response = spotify.recommendations(seed_artists=top_artists, seed_genres=None, seed_tracks=top_ids, limit=5, country=None)
+        recs = []
+        for i in range(len(recs_response['tracks'])):
+            recs.append(recs_response['tracks'][i]['name'])
+        return jsonify({'recommended_songs' : recs, 'token' : access_token})
+    
+    except spotipy.SpotifyException:
+        return jsonify({'error': 'Failed to fetch top tracks'}), 400
