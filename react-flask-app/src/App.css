@@ -24,6 +24,28 @@
   color: white;
 }
 
+.App-login-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #1ed760;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.App-spotify-logo {
+  width: 250px; 
+  margin-bottom: 20px;
+}
+.App-title {
+  margin-top: 0;
+  font-size: 2em;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +57,121 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+.content-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+/* Fully waiting to render Genius API */
+.loading { 
+  color: #666;
+  margin: 20px 0;
+}
+
+.error {
+  color: #ff4444;
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #ffeeee;
+  border-radius: 4px;
+}
+/*CSS for song + genius fact UI -- modifications for popup for genius facts in progress */
+.song-list {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.song-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.song-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.genius-facts {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.song-fact {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #1ed760;
+  border-radius: 4px;
+}
+
+.song-fact h4 {
+  margin: 0 0 10px 0;
+  color: #ffffff;
+}
+
+
+
+.recommendations {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.genre-select {
+  width: 100%;
+}
+
+.fetch-button {
+  background-color: #1ed760;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.fetch-button:hover {
+  background-color: #1ed760;
+}
+
+.recommendations-list {
+  margin-top: 20px;
+}
+
+
+
+/* !important needed for rendering .... */
+.select__option {
+  color: black !important;
+}
+
+.select__single-value,
+.select__multi-value__label {
+  color: black !important;
+}
+
+
+.select__input-container {
+  color: black !important;
+}
+
+
+.select__placeholder {
+  color: black !important;
 }
