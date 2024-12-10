@@ -11,6 +11,11 @@ pip install -r requirements.txt
 ```
 Ensure you also have Node.js installed.
 
+To install all React dependencies:
+```
+npm install
+```
+
 To run the React app, run the following:
 ```
 cd react-flask-app && npm start
