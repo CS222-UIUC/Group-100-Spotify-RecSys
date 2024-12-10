@@ -60,7 +60,6 @@
 }
 
 
-
 .content-container {
   width: 100%;
   max-width: 800px;
@@ -74,50 +73,12 @@
   justify-content: center;
   margin-bottom: 20px;
 }
-/* Fully waiting to render Genius API */
+
+/* for genius API to load */ 
 .loading { 
   color: #666;
   margin: 20px 0;
-}
-
-.error {
-  color: #ff4444;
-  margin: 20px 0;
-  padding: 10px;
-  background-color: #ffeeee;
-  border-radius: 4px;
-}
-/*CSS for song + genius fact UI -- modifications for popup for genius facts in progress */
-.song-list {
-  margin: 20px 0;
-  text-align: left;
-}
-
-.song-list ul {
-  list-style: none;
-  padding: 0;
-}
-
-.song-list li {
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.genius-facts {
-  margin: 20px 0;
-  text-align: left;
-}
-
-.song-fact {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #1ed760;
-  border-radius: 4px;
-}
-
-.song-fact h4 {
-  margin: 0 0 10px 0;
-  color: #ffffff;
+  font-size: 16px;
 }
 
 
@@ -149,12 +110,6 @@
 .fetch-button:hover {
   background-color: #1ed760;
 }
-
-.recommendations-list {
-  margin-top: 20px;
-}
-
-
 
 /* !important needed for rendering .... */
 .select__option {

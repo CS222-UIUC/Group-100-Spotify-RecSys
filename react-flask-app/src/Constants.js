@@ -1,0 +1,22 @@
+export const genreOptions = [
+  { value: 'acoustic', label: 'Acoustic' },
+  { value: 'alt-rock', label: 'Alt-Rock' },
+  { value: 'alternative', label: 'Alternative' },
+  { value: 'blues', label: 'Blues' },
+  { value: 'classical', label: 'Classical' },
+  { value: 'country', label: 'Country' },
+  { value: 'dance', label: 'Dance' },
+  { value: 'edm', label: 'EDM' },
+  { value: 'hip-hop', label: 'Hip-Hop' },
+  { value: 'indie', label: 'Indie' },
+  { value: 'k-pop', label: 'K-Pop' },
+  { value: 'metal', label: 'Metal' },
+  { value: 'pop', label: 'Pop' },
+  { value: 'r-n-b', label: 'R&B' },
+  { value: 'rock', label: 'Rock' },
+  { value: 'sad', label: 'Sad' },
+  { value: 'soul', label: 'Soul' },
+  { value: 'study', label: 'Study' },
+  { value: 'techno', label: 'Techno' },
+  { value: 'work-out', label: 'Work-Out' }
+];
