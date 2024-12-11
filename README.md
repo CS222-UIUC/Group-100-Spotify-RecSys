@@ -7,6 +7,10 @@ This project does the following:
 1. Authenticates a user with Spotify on Login
 2. Offers multitude of functions: Get top 5 tracks, get filtered recommendation, get personalized recommendation
 3. Save playlist to your Spotify Account
+## Developers
+- Allison Daemicke: Implemented backend and frontend functionalities
+- Priya Datt: Wrote functions to gather recommendation data, tokenization, and genius facts from APIS
+
 
 ## Project Architecture
 ![screenshot](spotify_architecture/spotify_arch.png)
