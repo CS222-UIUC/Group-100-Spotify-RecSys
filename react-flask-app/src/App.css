@@ -24,6 +24,28 @@
   color: white;
 }
 
+.App-login-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #1ed760;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.App-spotify-logo {
+  width: 250px; 
+  margin-bottom: 20px;
+}
+.App-title {
+  margin-top: 0;
+  font-size: 2em;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +57,76 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.content-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* for genius API to load */ 
+.loading { 
+  color: #666;
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+
+
+.recommendations {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.genre-select {
+  width: 100%;
+}
+
+.fetch-button {
+  background-color: #1ed760;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.fetch-button:hover {
+  background-color: #1ed760;
+}
+
+/* !important needed for rendering .... */
+.select__option {
+  color: black !important;
+}
+
+.select__single-value,
+.select__multi-value__label {
+  color: black !important;
+}
+
+
+.select__input-container {
+  color: black !important;
+}
+
+
+.select__placeholder {
+  color: black !important;
 }
